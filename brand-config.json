@@ -1,0 +1,44 @@
+{
+  "company": {
+    "name": "Red Bird International",
+    "tagline": "Global Garments Export & Manufacturer",
+    "address": "Plot-100, Majar Chow Road, Uttarkhan",
+    "city": "Dhaka 1230",
+    "country": "Bangladesh",
+    "phone": "+880 1966-635-888",
+    "email": "info@redbird-international.com",
+    "website": "www.redbird-international.com"
+  },
+  "brand": {
+    "primary_logo": "assets/logo-dark-navy.svg",
+    "logo_alt": "assets/logo-gold-cream.svg",
+    "favicon": "assets/favicon.ico"
+  },
+  "colors": {
+    "primary_red": "#C0272D",
+    "primary_blue_dark": "#0B2545",
+    "primary_blue_light": "#163A63",
+    "gold": "#E7B76B",
+    "gold_light": "#F5D08E",
+    "maroon_deep": "#5C171C",
+    "maroon_dark": "#2A0D12",
+    "cream": "#F7F3EE",
+    "white": "#FFFFFF",
+    "dark_navy": "#0B1220",
+    "dark_bg": "#0F172A",
+    "text_light": "#EDF2F7",
+    "text_muted": "#A9B4C3"
+  },
+  "typography": {
+    "brand_font": "Georgia, Garamond, serif",
+    "sans_serif": "Inter, Segoe UI, Arial, sans-serif",
+    "mono": "Fira Code, monospace"
+  },
+  "design_elements": {
+    "description": "Red Bird logo features:",
+    "eagle_wing": "Gradient red-orange-gold representing flight and premium quality",
+    "blue_accent": "Deep navy-blue symbolizing trust and global reach",
+    "world_map": "Represents international export presence",
+    "style": "Modern, dynamic, premium corporate brand"
+  }
+}
