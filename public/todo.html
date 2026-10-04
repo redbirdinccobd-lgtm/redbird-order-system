@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Red Bird Task Manager | Professional To-Do List</title>
+  <link rel="stylesheet" href="css/todo.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-content">
+        <div class="logo-section">
+          <div class="logo-mark">✓</div>
+          <div class="logo-text">
+            <h1>RED BIRD TASK MANAGER</h1>
+            <p>Productive Task Management System</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button id="themeToggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <div class="container">
+        <div class="todo-layout">
+          <!-- LEFT SIDEBAR - STATS & FILTERS -->
+          <aside class="sidebar">
+            <div class="stats-card">
+              <h3>Today's Stats</h3>
+              <div class="stat-item">
+                <span>Total Tasks</span>
+                <strong id="totalTasks">0</strong>
+              </div>
+              <div class="stat-item">
+                <span>Completed</span>
+                <strong id="completedTasks">0</strong>
+              </div>
+              <div class="stat-item">
+                <span>Pending</span>
+                <strong id="pendingTasks">0</strong>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+              </div>
+            </div>
+
+            <div class="filters-card">
+              <h3>Filters</h3>
+              <button class="filter-btn active" data-filter="all">All Tasks</button>
+              <button class="filter-btn" data-filter="active">Active</button>
+              <button class="filter-btn" data-filter="completed">Completed</button>
+              <button class="filter-btn" data-filter="high">High Priority</button>
+              <button class="filter-btn" data-filter="today">Today's Tasks</button>
+            </div>
+
+            <div class="categories-card">
+              <h3>Categories</h3>
+              <div id="categoriesList" class="categories-list">
+                <!-- Categories will be added dynamically -->
+              </div>
+            </div>
+
+            <div class="actions-card">
+              <button id="exportBtn" class="action-btn">📥 Export Tasks</button>
+              <button id="importBtn" class="action-btn">📤 Import Tasks</button>
+              <button id="clearBtn" class="action-btn danger">🗑 Clear All</button>
+              <input type="file" id="importFile" accept=".json" style="display: none;" />
+            </div>
+          </aside>
+
+          <!-- MAIN CONTENT AREA -->
+          <div class="main-area">
+            <!-- INPUT SECTION -->
+            <section class="input-section">
+              <div class="input-container">
+                <input
+                  type="text"
+                  id="taskInput"
+                  class="task-input"
+                  placeholder="What needs to be done today?"
+                  autocomplete="off"
+                />
+                <button id="addBtn" class="add-btn">Add Task</button>
+              </div>
+
+              <div class="task-options">
+                <div class="option-group">
+                  <label>Priority</label>
+                  <select id="prioritySelect">
+                    <option value="low">Low</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="high">High</option>
+                  </select>
+                </div>
+                <div class="option-group">
+                  <label>Category</label>
+                  <input type="text" id="categoryInput" placeholder="e.g., Work, Personal" />
+                </div>
+                <div class="option-group">
+                  <label>Due Date</label>
+                  <input type="date" id="dueDateInput" />
+                </div>
+              </div>
+            </section>
+
+            <!-- SEARCH & SORT -->
+            <section class="controls-section">
+              <div class="search-box">
+                <input
+                  type="text"
+                  id="searchInput"
+                  class="search-input"
+                  placeholder="Search tasks..."
+                />
+              </div>
+              <div class="sort-box">
+                <select id="sortSelect">
+                  <option value="date-desc">Newest First</option>
+                  <option value="date-asc">Oldest First</option>
+                  <option value="priority">High Priority First</option>
+                  <option value="name">Alphabetical (A-Z)</option>
+                </select>
+              </div>
+            </section>
+
+            <!-- TASKS LIST -->
+            <section class="tasks-section">
+              <div id="tasksList" class="tasks-list">
+                <div class="empty-state">
+                  <div class="empty-icon">📝</div>
+                  <p>No tasks yet. Add one to get started!</p>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- TASK EDIT MODAL -->
+    <div id="editModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Edit Task</h2>
+          <button class="modal-close">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Task Title</label>
+            <input type="text" id="editTaskTitle" />
+          </div>
+          <div class="form-group">
+            <label>Task Description</label>
+            <textarea id="editTaskDesc" rows="4"></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Priority</label>
+              <select id="editTaskPriority">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Category</label>
+              <input type="text" id="editTaskCategory" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Due Date</label>
+            <input type="date" id="editTaskDueDate" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="cancelEditBtn" class="btn-secondary">Cancel</button>
+          <button id="saveEditBtn" class="btn-primary">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="js/todo.js"></script>
+</body>
+</html>
