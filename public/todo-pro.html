@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Red Bird Task Manager Pro | Advanced Task Management</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/todo-pro.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-content">
+        <div class="logo-section">
+          <div class="logo-mark">✓</div>
+          <div class="logo-text">
+            <h1>RED BIRD TASK MANAGER</h1>
+            <p>Professional Task Management System</p>
+          </div>
+        </div>
+        <nav class="header-nav">
+          <button class="nav-btn active" data-view="tasks">Tasks</button>
+          <button class="nav-btn" data-view="projects">Projects</button>
+          <button class="nav-btn" data-view="analytics">Analytics</button>
+          <button class="nav-btn" data-view="settings">Settings</button>
+        </nav>
+        <div class="header-actions">
+          <button id="syncBtn" class="sync-btn" title="Sync to Cloud"><i class="fas fa-cloud-upload-alt"></i></button>
+          <button id="themeToggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <div class="container">
+        <!-- TASKS VIEW -->
+        <section id="view-tasks" class="view-section active">
+          <div class="tasks-layout">
+            <!-- SIDEBAR -->
+            <aside class="sidebar">
+              <div class="stats-card">
+                <h3>Today's Stats</h3>
+                <div class="stat-item">
+                  <span>Total Tasks</span>
+                  <strong id="totalTasks">0</strong>
+                </div>
+                <div class="stat-item">
+                  <span>Completed</span>
+                  <strong id="completedTasks">0</strong>
+                </div>
+                <div class="stat-item">
+                  <span>Overdue</span>
+                  <strong id="overdueTasks">0</strong>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" id="progressFill"></div>
+                </div>
+              </div>
+
+              <div class="projects-card">
+                <div class="card-header">
+                  <h3>Projects</h3>
+                  <button id="newProjectBtn" class="btn-icon" title="New Project">+</button>
+                </div>
+                <div id="projectsList" class="projects-list">
+                  <!-- Projects will be added here -->
+                </div>
+              </div>
+
+              <div class="filters-card">
+                <h3>Filters</h3>
+                <button class="filter-btn active" data-filter="all">All Tasks</button>
+                <button class="filter-btn" data-filter="active">Active</button>
+                <button class="filter-btn" data-filter="completed">Completed</button>
+                <button class="filter-btn" data-filter="high">High Priority</button>
+                <button class="filter-btn" data-filter="today">Today</button>
+                <button class="filter-btn" data-filter="overdue">Overdue</button>
+              </div>
+            </aside>
+
+            <!-- MAIN AREA -->
+            <div class="main-area">
+              <!-- INPUT SECTION -->
+              <section class="input-section">
+                <div class="input-container">
+                  <select id="projectSelect" class="project-select">
+                    <option value="">Default Project</option>
+                  </select>
+                  <input
+                    type="text"
+                    id="taskInput"
+                    class="task-input"
+                    placeholder="What needs to be done?"
+                    autocomplete="off"
+                  />
+                  <button id="addBtn" class="add-btn"><i class="fas fa-plus"></i> Add Task</button>
+                </div>
+
+                <div class="task-options">
+                  <div class="option-group">
+                    <label>Priority</label>
+                    <select id="prioritySelect">
+                      <option value="low">Low</option>
+                      <option value="medium" selected>Medium</option>
+                      <option value="high">High</option>
+                    </select>
+                  </div>
+                  <div class="option-group">
+                    <label>Due Date</label>
+                    <input type="date" id="dueDateInput" />
+                  </div>
+                  <div class="option-group">
+                    <label>Repeat</label>
+                    <select id="repeatSelect">
+                      <option value="none">None</option>
+                      <option value="daily">Daily</option>
+                      <option value="weekly">Weekly</option>
+                      <option value="monthly">Monthly</option>
+                    </select>
+                  </div>
+                </div>
+              </section>
+
+              <!-- CONTROLS -->
+              <section class="controls-section">
+                <div class="search-box">
+                  <input
+                    type="text"
+                    id="searchInput"
+                    class="search-input"
+                    placeholder="Search tasks..."
+                  />
+                </div>
+                <div class="sort-box">
+                  <select id="sortSelect">
+                    <option value="date-desc">Newest First</option>
+                    <option value="date-asc">Oldest First</option>
+                    <option value="priority">High Priority First</option>
+                    <option value="duedate">Due Date First</option>
+                    <option value="name">Alphabetical (A-Z)</option>
+                  </select>
+                </div>
+              </section>
+
+              <!-- TASKS LIST -->
+              <section class="tasks-section">
+                <div id="tasksList" class="tasks-list" data-sortable>
+                  <div class="empty-state">
+                    <div class="empty-icon">📋</div>
+                    <p>No tasks yet. Add one to get started!</p>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </section>
+
+        <!-- PROJECTS VIEW -->
+        <section id="view-projects" class="view-section">
+          <div class="projects-container">
+            <div class="section-header">
+              <h2>All Projects</h2>
+              <button id="newProjectBtnLarge" class="btn-primary"><i class="fas fa-plus"></i> New Project</button>
+            </div>
+            <div id="allProjectsList" class="projects-grid">
+              <div class="empty-state">
+                <div class="empty-icon">📁</div>
+                <p>No projects yet. Create one to organize your tasks!</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ANALYTICS VIEW -->
+        <section id="view-analytics" class="view-section">
+          <div class="analytics-container">
+            <h2>Task Analytics</h2>
+            <div class="analytics-grid">
+              <div class="chart-card">
+                <h3>Completion Rate</h3>
+                <div class="chart-placeholder" id="completionChart">📊</div>
+              </div>
+              <div class="chart-card">
+                <h3>Tasks by Priority</h3>
+                <div class="chart-placeholder" id="priorityChart">📊</div>
+              </div>
+              <div class="chart-card">
+                <h3>Weekly Overview</h3>
+                <div class="chart-placeholder" id="weeklyChart">📊</div>
+              </div>
+              <div class="chart-card">
+                <h3>Productivity Stats</h3>
+                <div class="stats-box" id="productivityStats"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SETTINGS VIEW -->
+        <section id="view-settings" class="view-section">
+          <div class="settings-container">
+            <h2>Settings</h2>
+            <div class="settings-grid">
+              <div class="settings-section">
+                <h3>General Settings</h3>
+                <div class="form-group">
+                  <label>Username</label>
+                  <input type="text" id="settingsUsername" placeholder="Your name" />
+                </div>
+                <div class="form-group">
+                  <label>Theme</label>
+                  <select id="themeSelect">
+                    <option value="dark">Dark (Default)</option>
+                    <option value="light">Light</option>
+                    <option value="auto">Auto (System)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>
+                    <input type="checkbox" id="notificationsCheck" checked />
+                    Enable Notifications
+                  </label>
+                </div>
+                <button class="btn-primary" id="saveSettingsBtn">Save Settings</button>
+              </div>
+
+              <div class="settings-section">
+                <h3>Data Management</h3>
+                <button class="btn-secondary" id="exportBtn"><i class="fas fa-download"></i> Export Tasks</button>
+                <button class="btn-secondary" id="importBtn"><i class="fas fa-upload"></i> Import Tasks</button>
+                <button class="btn-danger" id="clearBtn"><i class="fas fa-trash"></i> Clear All Data</button>
+                <input type="file" id="importFile" accept=".json" style="display: none;" />
+              </div>
+
+              <div class="settings-section">
+                <h3>Cloud Sync</h3>
+                <div class="cloud-status" id="cloudStatus">
+                  <span>Status: <strong>Local Only</strong></span>
+                  <p>Your data is stored locally in your browser.</p>
+                </div>
+                <button class="btn-secondary" id="connectCloudBtn">Connect Cloud Storage</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- MODALS -->
+  <!-- TASK EDIT MODAL -->
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Edit Task</h2>
+        <button class="modal-close">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Task Title</label>
+          <input type="text" id="editTaskTitle" />
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="editTaskDesc" rows="4" placeholder="Add detailed notes..."></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Priority</label>
+            <select id="editTaskPriority">
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Project</label>
+            <select id="editTaskProject"></select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Due Date</label>
+            <input type="date" id="editTaskDueDate" />
+          </div>
+          <div class="form-group">
+            <label>Repeat</label>
+            <select id="editTaskRepeat">
+              <option value="none">None</option>
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="cancelEditBtn" class="btn-secondary">Cancel</button>
+        <button id="saveEditBtn" class="btn-primary">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT MODAL -->
+  <div id="projectModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="projectModalTitle">New Project</h2>
+        <button class="modal-close">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Project Name</label>
+          <input type="text" id="projectName" placeholder="e.g., Work, Personal" />
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="projectDesc" rows="3" placeholder="Project description..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Color</label>
+          <div class="color-picker">
+            <button class="color-option" data-color="#c0272d" style="background: #c0272d;" title="Red"></button>
+            <button class="color-option" data-color="#e7b76b" style="background: #e7b76b;" title="Gold"></button>
+            <button class="color-option" data-color="#2ecc71" style="background: #2ecc71;" title="Green"></button>
+            <button class="color-option" data-color="#4aa3ff" style="background: #4aa3ff;" title="Blue"></button>
+            <button class="color-option" data-color="#9b59b6" style="background: #9b59b6;" title="Purple"></button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="cancelProjectBtn" class="btn-secondary">Cancel</button>
+        <button id="saveProjectBtn" class="btn-primary">Save Project</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-sortable/0.13.3/html5-sortable.min.js"></script>
+  <script src="js/todo-pro.js"></script>
+</body>
+</html>
